@@ -2,9 +2,10 @@ const express = require('express')
 const app = express()
 const productRoute = require('./routes/product.route')
 const mongoose = require('mongoose')
+const userRoute = require('./routes/user.route')
 
-app.use(express.urlencoded({extended:true}))  //so it can see the BODY content inside the form
-app.use(express.json()) 
+app.use(express.urlencoded({extended:true}))  //so it can see the BODY content inside the form -- (req.body)
+app.use(express.json()) //this allows us to use the body rather than the body-form-encode while using thunderbolt for testing API
 require('dotenv').config()
 
 const URI = process.env.DATABASE_URI
@@ -20,6 +21,13 @@ mongoose.connect(URI)
 
 app.use('/product', productRoute)
 
+app.use('/account', userRoute)
+
+
+app.get('/', (req,res)=>{
+    res.send('Hello Dude😂')
+})
+
 // const ProductSchema = mongoose.Schema({
 //     title:{type:String, require:true},
 //     price:{type:Number, require:true},
@@ -30,14 +38,7 @@ app.use('/product', productRoute)
 // })
 
 
-app.get('/', (req,res)=>{
-    res.send('Hello Dude😂')
-})
-
-
 // const ProductModel = mongoose.model('product_collection', ProductSchema)
-
-
 
 // app.post('/add-product', (req,res)=>{
 
@@ -83,4 +84,4 @@ app.listen(PORT, (err)=>{
 
 
 //MVCR
-// Model, View, COntrol, ROute
+// Model, View, Control, Route
