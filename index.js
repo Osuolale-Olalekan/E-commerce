@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const productRoute = require('./routes/product.route')
 const mongoose = require('mongoose')
 const userRoute = require('./routes/user.route')
@@ -7,6 +8,22 @@ const userRoute = require('./routes/user.route')
 app.use(express.urlencoded({extended:true}))  //so it can see the BODY content inside the form -- (req.body)
 app.use(express.json()) //this allows us to use the body rather than the body-form-encode while using thunderbolt for testing API
 require('dotenv').config()
+
+
+// access to all origin
+app.use(cors())
+
+
+//to a specific end or frontend
+// const corsOption = {
+//     origin: ['http://localhost:5173'],
+//     optionSuccessStatus: 200
+// }
+// app.use(cors(corsOption))
+
+
+
+
 
 const URI = process.env.DATABASE_URI
 
