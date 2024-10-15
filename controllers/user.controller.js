@@ -40,7 +40,7 @@ const registerUser = (req, res)=>{
                 
             }
         })
-        res.send({status:true, data})
+        res.send({status:true, message: "Registration Succesful!" ,data})
     })
     .catch((err)=>{
         res.send({status:false, message:('Unable to register')})
@@ -48,5 +48,45 @@ const registerUser = (req, res)=>{
 
 }
 
+const loginUser = (req, res)=>{
+    const { email, password } = req.body
+    UserModel.findOne({email})
+    .then((data)=>{
+        if(data){
+            data.validatePassword(password, (err, isMatch)=>{
+                if(isMatch){
+                    res.send({
+                        status: true,
+                        message: "Login successfully",  data
+                    })
+                }
+                else{
+                    res.send({
+                        status:false,
+                        message: "Invalid Password"
+                    })
+                }
+            })
+        }
 
-module.exports = { registerUser }
+        else{
+            res.send({
+                status: false,
+                message: "Email not found"
+            })
+        }
+    })
+    .catch((err)=>{
+        res.send({
+            status: false,
+            message: `error occured: ${err.message}`
+        })
+    })
+}
+
+
+
+
+
+
+module.exports = { registerUser, loginUser }
