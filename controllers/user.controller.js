@@ -1,6 +1,6 @@
 const express = require('express')
 const { UserModel } = require('../models/user.model')
-
+const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer') //this is installed so as to send email
 
 const registerUser = (req, res)=>{
@@ -55,15 +55,16 @@ const loginUser = (req, res)=>{
         if(data){
             data.validatePassword(password, (err, isMatch)=>{
                 if(isMatch){
+                    const token = jwt.sign({id:data._id}, process.env.SECRET_KEY, {expiresIn: 60} )
                     res.send({
                         status: true,
-                        message: "Login successfully",  data
+                        message: "Login successfully",  data, token
                     })
                 }
                 else{
                     res.send({
                         status:false,
-                        message: "Invalid Password"
+                        message: "Invalid email or Password"
                     })
                 }
             })
@@ -84,9 +85,31 @@ const loginUser = (req, res)=>{
     })
 }
 
+const verifyAUth = (req, res) =>{
+    let token = req.headers.authorization.split(" ")[1]
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded)=>{
+        if(err){
+            res.send({status: false, message: "Invalid Token"})
+        }
+        else{
+            id = decoded.id
+            UserModel.findOne({_id:id})
+            .then((data)=>{
+                if (data){
+                    res.send({status:true, message: "Token Verified", data:decoded})
+                }else{
+                    res.send({status: false, message: "Invalid Token"})
+                }
+            })
+            .catch((err)=>{
+                res.send({status: false, message: "Error Validating Token"})
+            })
+        }
+    })
+}
 
 
 
 
 
-module.exports = { registerUser, loginUser }
+module.exports = { registerUser, loginUser, verifyAUth }
