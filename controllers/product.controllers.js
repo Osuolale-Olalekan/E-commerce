@@ -32,4 +32,22 @@ const allProduct = (req,res)=>{
 }
 
 
-module.exports = { addProduct, allProduct }
+const deleteProduct = (req,res)=>{
+        const id = req.params.id;
+    
+        ProductModel.findByIdAndDelete(id)
+            .then((data) => {
+                if (!data) {
+                     res.send({ message: 'Product not found' });
+                }
+                console.log('Product deleted:', data);
+                res.send({ message: 'Product deleted successfully' });
+            })
+            .catch((err) => {
+                console.error(err);
+                res.send({ message: 'Internal Server Error', error: err.message }); 
+            });
+            
+}
+
+module.exports = { addProduct, allProduct, deleteProduct }
