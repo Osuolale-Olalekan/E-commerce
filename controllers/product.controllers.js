@@ -32,22 +32,22 @@ const allProduct = (req,res)=>{
 }
 
 
-const deleteProduct = (req,res)=>{
-        const id = req.params.id;
+// const deleteProduct = (req,res)=>{
+//         const id = req.params.id;
     
-        ProductModel.findByIdAndDelete(id)
-            .then((data) => {
-                if (!data) {
-                     res.send({ message: 'Product not found' });
-                }
-                console.log('Product deleted:', data);
-                res.send({ message: 'Product deleted successfully' });
-            })
-            .catch((err) => {
-                console.error(err);
-                res.send({ message: 'Internal Server Error', error: err.message }); 
-            });
-            
-}
+//         ProductModel.findByIdAndDelete(id)
+//             .then((data) => {
+//                 if (!data) {
+//                      res.send({ message: 'Product not found' });
+//                 }
+//                 console.log('Product deleted:', data);
+//                 res.send({ message: 'Product deleted successfully' });
+//             })
+//             .catch((err) => {
+//                 console.error(err);
+//                 res.send({ message: 'Internal Server Error', error: err.message }); 
+//             });
 
-module.exports = { addProduct, allProduct, deleteProduct }
+// }
+
+module.exports = { addProduct, allProduct }
