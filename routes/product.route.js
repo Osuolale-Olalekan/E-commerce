@@ -9,6 +9,6 @@ route.post('/add-product', addProduct)
 
 route.get('/all-product', allProduct)
 
-route.delete('/delete-product', deleteProduct)
+route.delete('/delete-product/:id', deleteProduct)
 
 module.exports = route
