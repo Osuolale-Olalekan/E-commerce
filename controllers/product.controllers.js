@@ -51,8 +51,8 @@ const deleteProduct = (req,res)=>{
 
     const editProduct =  (req,res)=>{
         const id = req.params.id
-        const updatedData = req.body
-        ProductModel.findByIdAndUpdate(id, updatedData,  { new: true , runValidators: true})
+        const updates = req.body
+        ProductModel.findByIdAndUpdate(id, updates,  { new: true , runValidators: true})
 
         .then((data)=>{
             res.send({status:true, message:"Product updated succesfully",data})
