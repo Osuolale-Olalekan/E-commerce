@@ -45,19 +45,22 @@ const deleteProduct = (req,res)=>{
             .catch((err)=>{
                 res.send({status:false, message:'Internal server error'})
             })
-
-            //     let data = response.data
-            //     if (data) {
-            //          res.send({ message: 'Product not found' });
-            //     }
-            //     console.log('Product deleted:', data);
-            //     res.send({ message: 'Product deleted successfully' });
-            // })
-            // .catch((err) => {
-            //     console.error(err);
-            //     res.send({ message: 'Internal Server Error', error: err.message }); 
             });
 
 }
 
-module.exports = { addProduct, allProduct, deleteProduct }
+    const editProduct =  (req,res)=>{
+        const id = req.params.id
+        const updatedData = req.body
+        ProductModel.findByIdAndUpdate(id, updatedData,  { new: true , runValidators: true})
+
+        .then((data)=>{
+            res.send({status:true, message:"Product updated succesfully",data})
+        })
+        .catch((err)=>{
+            res.send({status:false, message:'Internal server error'})
+        })
+    }
+
+
+module.exports = { addProduct, allProduct, deleteProduct, editProduct }
