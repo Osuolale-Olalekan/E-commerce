@@ -55,7 +55,7 @@ const loginUser = (req, res)=>{
         if(data){
             data.validatePassword(password, (err, isMatch)=>{
                 if(isMatch){
-                    const token = jwt.sign({id:data._id}, process.env.SECRET_KEY, {expiresIn: '1h'} )
+                    const token = jwt.sign({id:data._id}, process.env.SECRET_KEY, {expiresIn: '30d'} )
                     res.send({
                         status: true,
                         message: "Login successfully",  data, token

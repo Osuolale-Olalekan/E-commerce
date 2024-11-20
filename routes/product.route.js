@@ -8,10 +8,10 @@ const route = express.Router()
 
 route.post('/add-product',verifyAUth, addProduct)
 
-route.get('/all-product', verifyAUth, allProduct)
+route.get('/all-product', allProduct)
 
 route.delete('/delete-product/:id', verifyAUth, deleteProduct)
 
-route.patch('/edit-product/:id',verifyAUth, editProduct)
+route.put('/edit-product/:id',verifyAUth, editProduct)
 
 module.exports = route

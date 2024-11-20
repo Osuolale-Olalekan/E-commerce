@@ -8,4 +8,4 @@ route.post('/login', loginUser)
 route.get('/verify-auth', verifyAUth)
 
 
-module.exports = route
+module.exports = route 
